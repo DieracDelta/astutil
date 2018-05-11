@@ -19,7 +19,8 @@ import (
 	"strings"
 	"testing"
 
-	"golang.org/x/tools/go/ast/astutil"
+	//"golang.org/x/tools/go/ast/astutil"
+  astutil "github.com/DieracDelta/astutil"
 )
 
 // pathToString returns a string containing the concrete types of the
