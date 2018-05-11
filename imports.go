@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// Package astutil contains common utilities for working with the Go AST.
-package astutil // import "golang.org/x/tools/go/ast/astutil"
+// Package duckastutil contains common utilities for working with the Go AST.
+package duckastutil // import "golang.org/x/tools/go/ast/duckastutil"
 
 import (
 	"fmt"

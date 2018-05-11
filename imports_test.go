@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package astutil
+package duckastutil
 
 import (
 	"bytes"
@@ -721,13 +721,13 @@ import (
 type I int
 `)
 	// The AddImport order here matters.
-	//AddImport(fset, file, "golang.org/x/tools/go/ast/astutil")
-	AddImport(fset, file, "github.com/DieracDelta/astutil")
+	//AddImport(fset, file, "golang.org/x/tools/go/ast/duckastutil")
+	AddImport(fset, file, "github.com/DieracDelta/duckastutil")
 	AddImport(fset, file, "os")
 	want := `package main
 
 import (
-  "github.com/DieracDelta/astutil"
+  "github.com/DieracDelta/duckastutil"
 	"os"
 )
 

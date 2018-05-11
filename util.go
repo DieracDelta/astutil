@@ -1,4 +1,4 @@
-package astutil
+package duckastutil
 
 //import "go/ast"
 import ast "github.com/DieracDelta/ast"

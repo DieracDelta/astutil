@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package astutil_test
+package duckastutil_test
 
 import (
 	"bytes"
@@ -13,14 +13,14 @@ import (
 	"go/token"
 	"testing"
 
-	//"golang.org/x/tools/go/ast/astutil"
-  astutil "github.com/DieracDelta/astutil"
+	//"golang.org/x/tools/go/ast/duckastutil"
+  duckastutil "github.com/DieracDelta/duckastutil"
 )
 
 var rewriteTests = [...]struct {
 	name       string
 	orig, want string
-	pre, post  astutil.ApplyFunc
+	pre, post  duckastutil.ApplyFunc
 }{
 	{name: "nop", orig: "package p\n", want: "package p\n"},
 
@@ -33,7 +33,7 @@ var x int
 
 var t T
 `,
-		post: func(c *astutil.Cursor) bool {
+		post: func(c *duckastutil.Cursor) bool {
 			if _, ok := c.Node().(*ast.ValueSpec); ok {
 				c.Replace(valspec("t", "T"))
 				return false
@@ -59,7 +59,7 @@ type T struct{}
 // a foo is a foo
 var x int
 `,
-		post: func(c *astutil.Cursor) bool {
+		post: func(c *duckastutil.Cursor) bool {
 			if _, ok := c.Parent().(*ast.GenDecl); ok && c.Name() == "Doc" && c.Node() == nil {
 				c.Replace(&ast.CommentGroup{List: []*ast.Comment{{Text: "// a foo is a foo"}}})
 			}
@@ -76,7 +76,7 @@ const a = 1
 
 const a, b, c = 1, 2, 3
 `,
-		pre: func(c *astutil.Cursor) bool {
+		pre: func(c *duckastutil.Cursor) bool {
 			if _, ok := c.Parent().(*ast.ValueSpec); ok {
 				switch c.Name() {
 				case "Names":
@@ -111,7 +111,7 @@ var (
 var after2 int
 var after1 int
 `,
-		pre: func(c *astutil.Cursor) bool {
+		pre: func(c *duckastutil.Cursor) bool {
 			if _, ok := c.Node().(*ast.GenDecl); ok {
 				c.InsertBefore(vardecl("before1", "int"))
 				c.InsertAfter(vardecl("after1", "int"))
@@ -134,7 +134,7 @@ var z int
 var y int
 var z int
 `,
-		pre: func(c *astutil.Cursor) bool {
+		pre: func(c *duckastutil.Cursor) bool {
 			n := c.Node()
 			if d, ok := n.(*ast.GenDecl); ok && d.Specs[0].(*ast.ValueSpec).Names[0].Name == "x" {
 				c.Delete()
@@ -157,7 +157,7 @@ var x1 int
 var y int
 var z int
 `,
-		pre: func(c *astutil.Cursor) bool {
+		pre: func(c *duckastutil.Cursor) bool {
 			n := c.Node()
 			if d, ok := n.(*ast.GenDecl); ok && d.Specs[0].(*ast.ValueSpec).Names[0].Name == "x" {
 				c.InsertAfter(vardecl("x1", "int"))
@@ -180,7 +180,7 @@ var y int
 var x1 int
 var z int
 `,
-		pre: func(c *astutil.Cursor) bool {
+		pre: func(c *duckastutil.Cursor) bool {
 			n := c.Node()
 			if d, ok := n.(*ast.GenDecl); ok && d.Specs[0].(*ast.ValueSpec).Names[0].Name == "x" {
 				c.Delete()
@@ -216,7 +216,7 @@ func TestRewrite(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				n := astutil.Apply(f, test.pre, test.post)
+				n := duckastutil.Apply(f, test.pre, test.post)
 				var buf bytes.Buffer
 				if err := format.Node(&buf, fset, n); err != nil {
 					t.Fatal(err)
@@ -243,7 +243,7 @@ func BenchmarkRewrite(b *testing.B) {
 					b.Fatal(err)
 				}
 				b.StartTimer()
-				sink = astutil.Apply(f, test.pre, test.post)
+				sink = duckastutil.Apply(f, test.pre, test.post)
 			}
 		})
 	}

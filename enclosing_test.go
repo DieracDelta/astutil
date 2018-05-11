@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package astutil_test
+package duckastutil_test
 
 // This file defines tests of PathEnclosingInterval.
 
@@ -19,8 +19,8 @@ import (
 	"strings"
 	"testing"
 
-	//"golang.org/x/tools/go/ast/astutil"
-  astutil "github.com/DieracDelta/astutil"
+	//"golang.org/x/tools/go/ast/duckastutil"
+  "github.com/DieracDelta/duckastutil"
 )
 
 // pathToString returns a string containing the concrete types of the
@@ -124,7 +124,7 @@ func TestPathEnclosingInterval_Exact(t *testing.T) {
 			continue
 		}
 
-		path, exact := astutil.PathEnclosingInterval(f, start, end)
+		path, exact := duckastutil.PathEnclosingInterval(f, start, end)
 		if !exact {
 			t.Errorf("PathEnclosingInterval(%q) not exact", test.substr)
 			continue
@@ -187,7 +187,7 @@ func TestPathEnclosingInterval_Paths(t *testing.T) {
 			continue
 		}
 
-		path, exact := astutil.PathEnclosingInterval(f, start, end)
+		path, exact := duckastutil.PathEnclosingInterval(f, start, end)
 		if got := fmt.Sprintf("%s,%v", pathToString(path), exact); got != test.path {
 			t.Errorf("PathEnclosingInterval(%q): got %q, want %q",
 				test.substr, got, test.path)
