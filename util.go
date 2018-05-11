@@ -1,6 +1,7 @@
 package astutil
 
-import "go/ast"
+//import "go/ast"
+import ast "github.com/DieracDelta/ast"
 
 // Unparen returns e with any enclosing parentheses stripped.
 func Unparen(e ast.Expr) ast.Expr {

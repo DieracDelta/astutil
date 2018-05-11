@@ -8,7 +8,8 @@ package astutil
 
 import (
 	"fmt"
-	"go/ast"
+	//"go/ast"
+  ast "github.com/DieracDelta/ast"
 	"go/token"
 	"sort"
 )

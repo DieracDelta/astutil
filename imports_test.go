@@ -6,7 +6,8 @@ package astutil
 
 import (
 	"bytes"
-	"go/ast"
+	//"go/ast"
+  ast "github.com/DieracDelta/ast"
 	"go/format"
 	"go/parser"
 	"go/token"

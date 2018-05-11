@@ -12,7 +12,8 @@ package astutil_test
 import (
 	"bytes"
 	"fmt"
-	"go/ast"
+	//"go/ast"
+  ast "github.com/DieracDelta/ast"
 	"go/parser"
 	"go/token"
 	"strings"
